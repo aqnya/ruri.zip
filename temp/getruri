@@ -1,0 +1,57 @@
+#!/bin/bash
+# SPDX-License-Identifier: MIT
+#
+#
+# This file is part of ruri, with ABSOLUTELY NO WARRANTY.
+#
+# MIT License
+# Copyright (c) 2025 Moe-hacker
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+if ! command -v wget &>/dev/null; then
+    echo "wget is not installed"
+    exit 1
+fi
+rm ${CPU_ARCH}.tar >/dev/null 2>&1
+wget https://github.com/Moe-hacker/ruri/releases/latest/download/${CPU_ARCH}.tar
+if [ $? != 0 ]; then
+    echo "Failed to download ruri"
+    echo "Please check your network or download ruri manually"
+    echo "If ruri has a new release, please wait for build completion"
+    exit 1
+fi
+tar -xf ${CPU_ARCH}.tar >/dev/null 2>&1
+rm -f ${CPU_ARCH}.tar
+rm -f LICENSE
+chmod +x ruri
+echo "ruri has been downloaded successfully"
+if [ x"$1" = "x-s" ]; then
+    exit 0
+fi
+read -p "Do you want to install ruri to $PREFIX/bin? [y/n]: " INSTALL
+if [ x"${INSTALL}" = "xy" ]; then
+    sudo mv ruri $PREFIX/bin/ || mv ruri $PREFIX/bin/
+    if [ $? != 0 ]; then
+        echo "Failed to install ruri"
+        echo "Please check your permission"
+        exit 1
+    fi
+    echo "ruri has been installed to $PREFIX/bin"
+fi
