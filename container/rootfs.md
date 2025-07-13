@@ -1,15 +1,29 @@
 # Kernel Space and User Space
 
-The kernel operates directly on the hardware, while user space programs run on top of the kernel. To interact with hardware and perform tasks like file I/O, process management, and memory allocation, user space programs use system calls provided by the kernel. These operations typically have side effects.
+In a Linux system, the kernel operates directly on the hardware, while user space programs run above the kernel. To perform operations such as file I/O, process management, and memory allocation, user space programs rely on system calls—interfaces provided by the kernel to access hardware and low-level functionality. These operations typically produce side effects in the system.
 
-When you run a program, the kernel creates a process in user space. The CPU handles the actual computation, while the kernel manages system calls and resources.
+When a user runs a program, the kernel creates a corresponding process in user space. The CPU handles the computation, while the kernel orchestrates system calls and resource management.
 
-In essence, a container is designed to run an isolated user space environment.
+At its core, a container provides an isolated user space environment that runs on top of the host kernel.
 
 # rootfs
-If we set aside lower-level components like hardware and UEFI, a running Linux system can be conceptually divided into two main parts: the kernel (including the core vmlinux, kernel modules *.ko, and device drivers), and the user space programs. A container's rootfs is essentially a complete user space environment. In an ideal scenario, a container with sufficient privileges could interact with hardware just like the host system and offer the same capabilities.
 
-# The overview of container tech
-However, reality falls short of this ideal. For example, Google's Android system often employs drivers and kernel configurations that are incompatible with standard GNU/Linux. As a result, running fully functional containers on Android devices is notoriously difficult.
+Setting aside lower-level components such as hardware and UEFI, a running Linux system can be broadly divided into two main parts:
 
-That said, containers were never designed primarily to run on such systems. For GNU/Linux, we already have a rich and mature user space environment. Modern container technology focuses more on isolation, security, and observability—achieved through mechanisms like Seccomp and eBPF. Containers are no longer just lightweight alternatives to virtual machines; they are secure, auditable sandboxes optimized for predictable, scalable deployments.
+1. Kernel Space: Includes the core kernel image (vmlinux), kernel modules (*.ko), and device drivers.
+
+
+2. User Space: Comprises the programs and libraries that users and services interact with.
+
+
+
+A container’s rootfs (root filesystem) is essentially a complete snapshot of this user space. In theory, with the right privileges and a compatible kernel, a container can access hardware and system functions almost as fully as the host itself.
+
+
+# Overview of Container Technology
+
+In practice, however, this ideal is often constrained by hardware, kernel compatibility, and system design. For example, Android devices—despite using the Linux kernel—often include proprietary drivers and customized kernel configurations that are incompatible with standard GNU/Linux containers. As a result, running general-purpose containers on Android is notoriously challenging.
+
+That said, containers were never primarily intended for such platforms. On GNU/Linux systems, we already have a mature and standardized user space environment. Modern container technology focuses less on mimicking a full system and more on isolation, security, and observability. Techniques such as Seccomp and eBPF allow containers to function as secure and controlled sandboxes.
+
+Today, containers are not just lightweight alternatives to virtual machines. They are designed to be secure, auditable, and scalable—optimized for modern deployment workflows in cloud-native and production environments.
