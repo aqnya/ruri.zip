@@ -24,34 +24,124 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-
-if ! command -v wget &>/dev/null; then
-    echo "wget is not installed"
-    exit 1
+error() {
+  printf "\033[31mError: %s\033[0m\n" "$1"
+  exit 1
+}
+cd $TMPDIR
+mkdir ruri_temp || error "Failed to create temporary directory"
+cd ruri_temp || error "Failed to change directory to ruri_temp"
+UNAME_ARCH=$(uname -m)
+case ${UNAME_ARCH} in
+armv7* | armv8l) CPU_ARCH="armhf" ;;
+armv[1-6]*) CPU_ARCH="armv7" ;;
+aarch64 | armv8* | arm64 | arm*) CPU_ARCH="aarch64" ;;
+x86_64 | amd64) CPU_ARCH="x86_64" ;;
+i*86 | x86) CPU_ARCH="i386" ;;
+risc*) CPU_ARCH="riscv64" ;;
+s390*) ARCH_TYPE="s390x" ;;
+ppc*) ARCH_TYPE="ppc64le" ;;
+loong*) ARCH_TYPE="loongarch64" ;;
+*) CPU_ARCH="" ;;
+esac
+if [ -z "${CPU_ARCH}" ]; then
+  error "Cannot detect CPU architecture"
 fi
-rm ${CPU_ARCH}.tar >/dev/null 2>&1
-wget https://github.com/Moe-hacker/ruri/releases/latest/download/${CPU_ARCH}.tar
-if [ $? != 0 ]; then
-    echo "Failed to download ruri"
-    echo "Please check your network or download ruri manually"
-    echo "If ruri has a new release, please wait for build completion"
-    exit 1
+tty_out() {
+  for i in $(seq 1 ${#2}); do
+    printf "$(printf "$2" | cut -c $i)"
+    sleep $1
+  done
+  echo
+}
+ruri_logo1="                _-###-_                "
+ruri_logo2="             _##  ***  ##_             "
+ruri_logo3="          _##    * * *    ##_          "
+ruri_logo4="       ###       * * *       ###       "
+ruri_logo5="     ##          * * *          ##     "
+ruri_logo6="   #**** _       * * *       _ ****#   "
+ruri_logo7="   # * *_ **__   * * *   __**_ * * #   "
+ruri_logo8="   #   * _**_ *_ * * * _* _**_ *   #   "
+ruri_logo9="   #      **_*  * *** *  *_**      #   "
+ruri_logo10="   #          ****+++****          #   "
+ruri_logo11="   #      **\`*  * *** *  *\`**      #   "
+ruri_logo12="   #   * \`**\` *\` * * * \`* \`**\` *   #   "
+ruri_logo13="   # * *\` **\`\`   * * *   \`\`**\` * * #   "
+ruri_logo14="   #**** \`       * * *       \` ****#   "
+ruri_logo15="     ##          * * *          ##     "
+ruri_logo16="       ###       * * *       ###       "
+ruri_logo17="         \`##     * * *     ##\`         "
+ruri_logo18="           \`##    ***    ##\`           "
+ruri_logo19="              \`\`\`-###-\`\`\`              "
+init_logo() {
+  clear
+  for i in $(seq 1 19); do
+    eval echo \"\${ruri_logo$i}\"
+  done
+  printf "\033[0H"
+}
+update_logo() {
+  L=$((19 * $1 / 100))
+  if [ x"$L_BK" = x"" ]; then
+    L_BK=0
+  fi
+  printf "\033[32m"
+  while [ $L -gt $L_BK ]; do
+    L_BK=$((L_BK + 1))
+    eval echo \"\${ruri_logo$L_BK}\"
+  done
+  export L_BK=$L
+}
+# URL="https://github.com/Moe-hacker/ruri/releases/latest/download/${CPU_ARCH}.tar"
+URL="https://mirrors.tuna.tsinghua.edu.cn/lxc-images/images/alpine/edge/arm64/default/20250628_13%3A00/rootfs.tar.xz"
+fallback() {
+  echo "Fallback mode..."
+  if !command -v wget >/dev/null 2>&1; then
+    curl -L "$URL" -o ruri.tar
+    if [ $? -ne 0 ]; then
+      error "Download failed!"
+    fi
+  else
+    wget -q --show-progress --progress=dot "$URL" -O ruri.tar
+  fi
+  if [ ! -f ruri.tar ]; then
+    error "Download failed!"
+  fi
+  tar -xf ruri.tar
+  rm -f ruri.tar
+  echo "Download complete!"
+  exit 0
+}
+if [ x$1 = "x-s"]; then
+  fallback
 fi
-tar -xf ${CPU_ARCH}.tar >/dev/null 2>&1
-rm -f ${CPU_ARCH}.tar
-rm -f LICENSE
+init_logo
+tmpfile=$(mktemp)
+if [ ! -f "$tmpfile" ]; then
+  fallback
+fi
+wget -q --show-progress --progress=dot "$URL" -O ruri.tar 2>&1 | stdbuf -oL grep "%" | stdbuf -oL sed 's/.* \([0-9.]*%\).*/\1/' | stdbuf -oL cut -d "%" -f 1 | while read -r percent; do
+  update_logo $percent
+  echo $percent >"$tmpfile"
+done
+percent=$(cat "$tmpfile")
+rm -f "$tmpfile"
+if [ "$percent" = "100" ]; then
+  tar -xf ruri.tar
+  rm -f ruri.tar
+  printf "\033[0m"
+  echo "Download complete!"
+else
+  printf "\033[31m"
+  fallback
+fi
 chmod +x ruri
-echo "ruri has been downloaded successfully"
-if [ x"$1" = "x-s" ]; then
-    exit 0
-fi
+rm -f LICENSE
 read -p "Do you want to install ruri to $PREFIX/bin? [y/n]: " INSTALL
 if [ x"${INSTALL}" = "xy" ]; then
-    sudo mv ruri $PREFIX/bin/ || mv ruri $PREFIX/bin/
-    if [ $? != 0 ]; then
-        echo "Failed to install ruri"
-        echo "Please check your permission"
-        exit 1
-    fi
-    echo "ruri has been installed to $PREFIX/bin"
+  sudo mv ruri $PREFIX/bin/ || mv ruri $PREFIX/bin/
+  if [ $? != 0 ]; then
+    error "Failed to install ruri"
+  fi
+  echo "ruri has been installed to $PREFIX/bin"
 fi
