@@ -69,7 +69,6 @@ fallback() {
 if [ "x$1" = "x-s" ]; then
   fallback
 fi
-exit 0
 if [ -z "$TMPDIR" ]; then
   TMPDIR="/tmp"
 fi
