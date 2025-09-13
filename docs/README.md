@@ -1,7 +1,7 @@
 ---
 home: true
-title: Ruri
-tagline: A zipped📦 Linux container that zips🚀
+title: Ruri - Lightweight, User-friendly Linux-container Implementation
+tagline: A zipped📦 Linux container runtime that zips🚀
 heroImage: /images/logo.png
 heroText: ruri
 
@@ -10,9 +10,6 @@ actions:
     link: https://github.com/RuriOSS/ruri
     type: primary
 
-#  - text: About us
-#    link: /get-started.html
- #   type: secondary
 
 footer: MIT Licensed | Copyright (c) 2022-2025 RuriOSS
 ---
