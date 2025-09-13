@@ -35,7 +35,7 @@ jobs:
 
       - name: 安装依赖
         run:
-          pnpm install --frozen-lockfile&&cp temp/* docs/.vuepress/dist/
+          pnpm install --frozen-lockfile
 
       - name: 构建文档
         env:
@@ -43,6 +43,9 @@ jobs:
         run: |-
           pnpm run docs:build
           > docs/.vuepress/dist/.nojekyll
+      - name: 准备静态文件
+        run: |
+          cp temp/* docs/.vuepress/dist/
 
       - name: 部署文档
         uses: JamesIves/github-pages-deploy-action@v4
