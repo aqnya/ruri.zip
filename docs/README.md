@@ -1,6 +1,7 @@
 ---
 home: true
 title: Ruri
+tagline: A zipped📦 Linux container that zips🚀
 heroImage: /images/logo.png
 
 actions:
@@ -91,7 +92,3 @@ This will automatically download ruri binary to `./ruri`.
 # Build Manually
 
 Ruri provides statically linked binary, but if you want to build it yourself, see [Build](/Build.html).
-
-This is the content of home page. Check [Home Page Docs][default-theme-home] for more details.
-
-[default-theme-home]: https://vuejs.press/reference/default-theme/frontmatter.html#home-page
