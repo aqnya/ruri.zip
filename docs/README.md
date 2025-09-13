@@ -6,9 +6,13 @@ heroImage: /images/logo.png
 heroText: ruri
 
 actions:
-  - text: Get Started
+  - text: Repository
     link: https://github.com/RuriOSS/ruri
     type: primary
+  - text: Full Usage
+    link: https://github.com/RuriOSS/ruri/blob/main/doc/USAGE.md
+    type: primary
+  
 
 
 footer: MIT Licensed | Copyright (c) 2022-2025 RuriOSS
