@@ -1,6 +1,7 @@
 ---
 home: true
 title: Ruri
+mainTitle: RURI
 tagline: A zipped📦 Linux container that zips🚀
 heroImage: /images/logo.png
 
