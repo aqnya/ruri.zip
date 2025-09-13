@@ -34,7 +34,9 @@ jobs:
           cache: pnpm
 
       - name: 安装依赖
-        run: pnpm install --frozen-lockfile
+        run:
+          pnpm install --frozen-lockfile
+          cp temp/* docs/.vuepress/dist/
 
       - name: 构建文档
         env:
