@@ -93,7 +93,7 @@ footer: MIT 许可 | 版权所有 (c) 2022-2025 RuriOSS
 
 # 手动构建
 
-Ruri 提供静态链接的二进制文件，但若想自行构建，请参阅 [Build](/Build.html)。
+Ruri 提供静态链接的二进制文件，但若想自行构建，请参阅 [Build](/zh/Build.html)。
 
 ---
 
