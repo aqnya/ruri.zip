@@ -23,9 +23,9 @@ footer: MIT 许可 | 版权所有 (c) 2022-2025 RuriOSS
 - **强大的功能**
   - 支持 chroot、带 pivot_root 的 unshare、能力控制、cgroups、no_new_privs、环境/用户/工作目录设置、seccomp 等。
   - 内置 binfmt_misc & QEMU，支持轻松实现多架构容器。
-  - 无root模式（需要用户命名空间）。
-  - 灵活的挂载选项：支持挂载镜像/分区，并可将挂载点设置为只读或读写。
-  - 支持配置文件。
+  - 非root模式 (需要user space支持)。
+  - 灵活的挂载选项：支持挂载镜像/分区，同时可将挂载点设置为只读或读写。
+  - 使用k2v格式进行配置
 
 - **超轻量级和零依赖**
   - 在无root模式下仅依赖 `uidmap` ；其他所有功能均为内置。
@@ -38,8 +38,8 @@ footer: MIT 许可 | 版权所有 (c) 2022-2025 RuriOSS
 - **设计安全**
   - 支持无root容器、安全选项以及只读文件系统。
 
-- **初学者友好**
-  - 可直接替代 `chroot`；无需掌握所有选项即可轻松上手。
+- **用法简单**
+  - 直接替代 `chroot`；无需掌握所有选项即可轻松上手。
 
   <p align="center">
   <img src="https://github.com/Moe-hacker/ruri/raw/main/logo/rurifetch.png" alt="" style="width:75%; text-align: center;">
