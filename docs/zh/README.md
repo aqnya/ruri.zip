@@ -28,17 +28,17 @@ footer: MIT 许可 | 版权所有 (c) 2022-2025 RuriOSS
   - 支持配置文件。
 
 - **超轻量级和零依赖**
-  - 无root模式仅需可选的 `uidmap`；其他所有功能均为内置。
+  - 在无root模式下仅依赖 `uidmap` ；其他所有功能均为内置。
   - 提供多种架构的静态链接二进制文件。
-  - 二进制文件体积极小（使用 upx 压缩后甚至小于 200k），却拥有超过 30 个选项。
+  - 在二进制文件体积极小的同时拥有超过 30 个参数可选（使用 upx 压缩本体后甚至小于 200k）。
 
-- **灵活和跨平台**
-  - 可在已 root 的 Android、物联网设备、amd64、s390x 等平台上运行，仅需 root 权限。
+- **跨平台**
+  - 可在 Android、IoT、amd64、s390x 等平台上运行。（需 root 权限）
 
-- **安全设计**
+- **设计安全**
   - 支持无root容器、安全选项以及只读文件系统。
 
-- **对初学者友好**
+- **初学者友好**
   - 可直接替代 `chroot`；无需掌握所有选项即可轻松上手。
 
   <p align="center">
@@ -46,21 +46,21 @@ footer: MIT 许可 | 版权所有 (c) 2022-2025 RuriOSS
   </p>
 
 ## 关于我们：
-&emsp;不是“为什么不用 Docker”，而是“什么时候不能用 Docker”。    
+&emsp;不要问“为什么不用 Docker”，而是“什么时候不能用 Docker”。    
 &emsp;ruri 的发音是 `luli`，你也可以用中文或日文称之为 `[瑠璃/琉璃]` ~~(るり)~~。    
 &emsp;ruri 是 Lightweight, User-friendly Linux-container Implementation 的缩写。    
 &emsp;ruri 是一个强大的容器实现，几乎可在任何 Linux 设备上运行，即便内核配置不完整或存储空间有限。    
 
 ## 获取 ruri
 
-你可以在 [Release](https://github.com/Moe-hacker/ruri/releases/) 中下载适用于 arm64、armv7、armhf、riscv64、i386、loong64、s390x、ppc64le 和 x86_64 等架构的 ruri 二进制文件（静态链接）。
-或者运行以下命令自动下载 ruri：
+你可以在 [Release](https://github.com/Moe-hacker/ruri/releases/) 中下载适用于 arm64、armv7、armhf、riscv64、i386、loong64、s390x、ppc64le 或 x86_64 等架构的 ruri 可执行文件（static build）。
+你也可以选择运行以下命令获取 ruri：
 
 ```sh
 . <(curl -sL https://get.ruri.zip/ruri)
 ```
 
-这将自动将 ruri 二进制文件下载至 `./ruri`。
+这将自动下载ruri至 `./ruri`。
 
 # 示例用法
 
@@ -87,7 +87,7 @@ footer: MIT 许可 | 版权所有 (c) 2022-2025 RuriOSS
 # 运行 unshare 容器
   sudo ruri -u /tmp/alpine
 
-# 最后，卸载容器
+# 卸载容器
   sudo ruri -U /tmp/alpine
 ```
 
