@@ -4,7 +4,7 @@ Chroot 代表“change root”（更改根目录）。它被引入 Unix 系统�
 
 通过 chroot，你可以为进程更改根目录，将其视图和访问权限限制在新根目录下的文件和目录中。这种隔离是 Linux 容器的一个关键特性。
 
-例如，`cat` 程序链接到几个库：
+例如 `cat` 程序，它链接到几个库：
 ```
 linux-vdso.so.1 (0x0000ffffaba1f000)
 libc.so.6 => /lib/aarch64-linux-gnu/libc.so.6 (0x0000ffffab7e0000)
@@ -32,4 +32,4 @@ execv(argv[0], argv);
 ---
 
 **注意**：本文档尚未完全翻译。欢迎贡献翻译！  
-**提示**：本翻译由 Google Gemini 大模型提供。
+**提示**：本翻译由 Grok（xAI）大模型提供。
