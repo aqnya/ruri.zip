@@ -1,7 +1,7 @@
 ---
 home: true
 title: Ruri - 轻量级、用户友好的 Linux 容器实现
-tagline: 一个压缩的📦 Linux 容器运行时，速度飞快🚀
+tagline: 一个压缩的📦 Linux 容器实现，速度飞快🚀
 heroImage: /images/logo.png
 heroText: ruri
 
