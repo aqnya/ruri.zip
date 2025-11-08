@@ -1,7 +1,7 @@
  > **注意**：本文档尚未翻译。欢迎贡献！
 
 # 构建
-你需要获取 libcap、libseccomp、libpthread。
+ruri依赖 libcap、libseccomp、libpthread ，在进行构建之前你需要安装它们。
 # 使用 build.c 构建（实验性）
 我们很高兴为 ruri 引入一个新的构建系统：build.c
 它是一个纯 C 程序，不依赖于任何外部构建系统。
@@ -32,7 +32,7 @@ sudo cp ruri /usr/bin/ruri
   --enable-dev            启用开发构建
 ```
 注意：`--enable-coreonly` 将自动启用 `--disable-libseccomp --disable-libcap --disable-rurienv`
-# 使用 CMake 构建（用于下游）
+# 使用 CMake 构建
 （如果你更喜欢使用 CMake）
 ```
 git clone https://github.com/Moe-hacker/ruri
