@@ -1,5 +1,5 @@
  > **注意**：本文档尚未翻译完全。欢迎贡献！
- > 该文档翻译由Google Gemini大模型提供
+ > **Tips**: 该文档翻译由Google Gemini大模型提供
 
 # 构建
 ruri依赖 libcap、libseccomp、libpthread ，在进行构建之前你需要安装它们。

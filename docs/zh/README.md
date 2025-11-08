@@ -19,7 +19,7 @@ footer: MIT 许可 | 版权所有 (c) 2022-2025 RuriOSS
 ---
 
 > **注意**：本文档尚未翻译完全。欢迎贡献！
-> 该文档翻译由Google Gemini大模型提供
+> **Tips**: 该文档翻译由Google Gemini大模型提供
 
 ## 亮点
 
